@@ -1,0 +1,31 @@
+DROP TABLE IF EXISTS Products;
+DROP TABLE IF EXISTS ProductsDetails;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Orders;
+
+CREATE TABLE Products (
+                          ID int AUTO_INCREMENT  PRIMARY KEY,
+                          Name varchar(255) NOT NULL,
+                          Price number NOT NULL,
+                          Amount int NOT NULL
+);
+
+CREATE TABLE ProductsDetails (
+                          ID int,
+                          Details varchar(255),
+                          Rating int
+);
+
+CREATE TABLE Users (
+                          ID int AUTO_INCREMENT  PRIMARY KEY,
+                          Name varchar(255) NOT NULL,
+                          Surname varchar(255) NOT NULL,
+                          Address varchar(255) NOT NULL
+);
+
+CREATE TABLE Orders (
+                       ID int,
+                       UserID int,
+                       ProductID int,
+                       Amount int
+);

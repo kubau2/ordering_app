@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GreetingController {
 
-    @GetMapping("/hello")
-    public String sayHello(@RequestParam(value = "myName", defaultValue = "World") String name) {
-        return String.format("Hello %s!", name);
-    }
-
     @GetMapping("/test")
     @ResponseBody
     public String getFoos(@RequestParam String id) {

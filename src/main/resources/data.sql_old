@@ -1,0 +1,6 @@
+insert into Products (Name, Price, Amount) values ('Sok', 3.5, 5);
+insert into Products (Name, Price, Amount) values ('Jablko', 1.5, 3);
+
+insert into ProductsDetails (ID, Details, Rating) values (1, 'To bardzo smaczny sok', 5);
+insert into ProductsDetails (ID, Details, Rating) values (2, 'Mmm, ale jabluszko', 4);
+
