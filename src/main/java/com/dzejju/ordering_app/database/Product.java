@@ -1,33 +1,26 @@
 package com.dzejju.ordering_app.database;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Builder;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String Name;
-    private int Availability;
+
 
     protected Product() {
     }
 
-    public Product(String name, int availability) {
+    public Product(String name) {
         this.Name = name;
-        this.Availability = availability;
     }
 
-    @Override
-    public String toString() {
-        return String.format(
-                "Prodict[id=%d, Name='%s', Availabilty='%d']",
-                id, Name, Availability);
-    }
 
     public Long getId() {
         return id;
@@ -37,7 +30,4 @@ public class Product {
         return Name;
     }
 
-    public int getAvailability() {
-        return Availability;
-    }
 }

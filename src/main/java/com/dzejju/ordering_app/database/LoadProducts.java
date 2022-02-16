@@ -8,16 +8,26 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoadProducts implements ApplicationRunner {
 
-    private ProductRepository repository;
+    private ProductRepository productRepository;
+
+    private StockRepository stockRepository;
 
     @Autowired
-    public LoadProducts(ProductRepository repository) {
-        this.repository = repository;
+    public LoadProducts(ProductRepository productRepository, StockRepository stockRepository) {
+        this.productRepository = productRepository;
+        this.stockRepository = stockRepository;
     }
 
 
     public void run(ApplicationArguments args) {
-        repository.save(new Product("Jabluszko", 2));
-        repository.save(new Product("Pierniki", 10));
+        Product product = new Product("Jabluszko");
+        productRepository.save(product);
+        Stock stock = new Stock(product.getId(), 10);
+        stockRepository.save(stock);
+
+        product = new Product("Pierniki");
+        productRepository.save(product);
+        stock = new Stock(product.getId(), 20);
+        stockRepository.save(stock);
     }
 }

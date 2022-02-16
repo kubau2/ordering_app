@@ -1,0 +1,47 @@
+package com.dzejju.ordering_app.database;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+
+public class LoadData {
+
+    @Bean
+    public CommandLineRunner loadCustomers(ProductRepository productRepository, StockRepository stockRepository) {
+        return (args) -> {
+            // save a couple of customers
+//            repository.save(new Customer("Jack", "Bauer"));
+//            repository.save(new Customer("Chloe", "O'Brian"));
+//            repository.save(new Customer("Kim", "Bauer"));
+//            repository.save(new Customer("David", "Palmer"));
+//            repository.save(new Customer("Michelle", "Dessler"));
+
+            Product product = new Product("Jabluszko");
+            productRepository.save(product);
+            Stock stock = new Stock(product.getId(), 10);
+            stockRepository.save(stock);
+
+            product = new Product("Pierniki");
+            productRepository.save(product);
+            stock = new Stock(product.getId(), 20);
+            stockRepository.save(stock);
+
+        };
+    }
+
+
+//    @Bean
+//    public CommandLineRunner loadProducts(ProductRepository productRepository, StockRepository stockRepository) {
+//        return (args) -> {
+//            Product product = new Product("Jabluszko");
+//            productRepository.save(product);
+//            Stock stock = new Stock(product.getId(), 10);
+//            stockRepository.save(stock);
+//
+//            product = new Product("Pierniki");
+//            productRepository.save(product);
+//            stock = new Stock(product.getId(), 20);
+//            stockRepository.save(stock);
+//        };
+//    }
+
+};
