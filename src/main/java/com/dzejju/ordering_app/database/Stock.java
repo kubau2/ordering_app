@@ -26,4 +26,8 @@ public class Stock {
         return availability;
     }
 
+    public void setAvailability(int availability) {
+        this.availability = availability;
+    }
+
 }

@@ -24,9 +24,15 @@ public class OrderService implements  IOrderService{
         if (customerId != null) {
             List<Cart> itemsInCart = cartRepository.findAllByCustomerID(customerId);
 
+            Long maxOrderID = orderRepository.maxOrderID();
+            if (maxOrderID==null){
+                maxOrderID = 1L;
+            } else{
+                maxOrderID++;
+            }
+
             for (Cart item : itemsInCart) {
-                //tu trzeba jeszcze ogarnac orderId
-                Order order = new Order(1L, customerId, item.getProductId(), item.getAmount());
+                Order order = new Order(maxOrderID, customerId, item.getProductId(), item.getAmount());
                 orderRepository.save(order);
             }
 

@@ -1,11 +1,10 @@
 package com.dzejju.ordering_app.methods;
 
 import com.dzejju.ordering_app.database.*;
+import com.dzejju.ordering_app.exceptions.NotEnoughProductException;
+import com.dzejju.ordering_app.exceptions.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class CartService implements  ICartService{
@@ -16,15 +15,20 @@ public class CartService implements  ICartService{
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private StockRepository stockRepository;
+
     @Override
     public Cart addToCart(Cart cart) {
+
+        removeFromStock(cart.getProductId(),cart.getAmount());
 
         createCustomerIfNone(cart);
         Long customerID = cart.getCustomerID();
 
         //Search for this item in the database
         Cart cartOld = cartRepository.findByproductId(cart.getProductId());
-        if (cartOld!=null){
+        if (cartOld!=null && cartOld.getCustomerID().equals(cart.getCustomerID())){
             //if found, then update old entry
             Integer amount = cartOld.getAmount() + cart.getAmount();
             cart = cartOld;
@@ -42,6 +46,20 @@ public class CartService implements  ICartService{
             customerRepository.save(customer);
             cart.setCustomerID(customer.getId());
         }
+    }
+
+    private void removeFromStock(Long productId, Integer amount){
+       Stock stock = stockRepository.findById(productId).orElse(null);
+       if (stock!=null){
+           if (stock.getAvailability()>=amount){
+               stock.setAvailability(stock.getAvailability()-amount);
+           }else{
+               throw new NotEnoughProductException(productId, stock.getAvailability());
+           }
+       }
+       else{
+           throw new ProductNotFoundException(productId);
+       }
     }
 
 
