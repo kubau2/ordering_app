@@ -1,9 +1,6 @@
 package com.dzejju.ordering_app.database;
 
-import lombok.Builder;
-
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class Product {
@@ -11,14 +8,16 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String Name;
+    private String name;
+    private Double price;
 
 
     protected Product() {
     }
 
-    public Product(String name) {
-        this.Name = name;
+    public Product(String name, Double price) {
+        this.name = name;
+        this.price = price;
     }
 
 
@@ -27,7 +26,11 @@ public class Product {
     }
 
     public String getName() {
-        return Name;
+        return name;
+    }
+
+    public Double getPrice() {
+        return price;
     }
 
 }

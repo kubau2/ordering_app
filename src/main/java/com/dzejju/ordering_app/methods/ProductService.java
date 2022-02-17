@@ -13,10 +13,10 @@ public class ProductService implements  IProductService{
     @Autowired
     private ProductRepository productRepository;
 
-    @Override
-    public void addProduct(String Name) {
-        productRepository.save(new Product(Name));
-    }
+//    @Override
+//    public void addProduct(String Name) {
+//        productRepository.save(new Product(Name));
+//    }
 
     @Override
     public Product getProductById(Long ID) {

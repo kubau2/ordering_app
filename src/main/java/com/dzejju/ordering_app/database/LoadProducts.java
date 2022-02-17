@@ -20,12 +20,12 @@ public class LoadProducts implements ApplicationRunner {
 
 
     public void run(ApplicationArguments args) {
-        Product product = new Product("Jabluszko");
+        Product product = new Product("Jabluszko", Double.valueOf(2.5));
         productRepository.save(product);
         Stock stock = new Stock(product.getId(), 10);
         stockRepository.save(stock);
 
-        product = new Product("Pierniki");
+        product = new Product("Piernik", Double.valueOf(5));
         productRepository.save(product);
         stock = new Stock(product.getId(), 20);
         stockRepository.save(stock);

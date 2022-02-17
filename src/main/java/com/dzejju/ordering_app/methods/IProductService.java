@@ -5,7 +5,7 @@ import com.dzejju.ordering_app.database.Product;
 
 public interface IProductService {
 
-    public abstract void addProduct(String Name);
+   // public abstract void addProduct(String Name);
     public abstract Product getProductById(Long ID);
  //   public abstract void updateProduct(String id, Product product);
  //   public abstract void deleteProduct(String id);
