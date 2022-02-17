@@ -2,6 +2,7 @@ package com.dzejju.ordering_app.controllers;
 
 
 import com.dzejju.ordering_app.database.*;
+import com.dzejju.ordering_app.exceptions.CustomerDataNotFilledException;
 import com.dzejju.ordering_app.methods.CartService;
 import com.dzejju.ordering_app.methods.CustomerService;
 import com.dzejju.ordering_app.methods.OrderService;
@@ -9,15 +10,7 @@ import com.dzejju.ordering_app.methods.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class WebController {
-
-//    @Autowired
-//    StockRepository stockRepository;
-//    @Autowired
-//    ProductRepository productRepository;
-//
-//    @Autowired
-//    CartRepository cartRepository;
+public class MainController {
 
     Cart cart = new Cart();
 
@@ -26,7 +19,7 @@ public class WebController {
     private CustomerService customerService;
     private OrderService orderService;
 
-    public WebController(CartService cartService, ProductService productService, CustomerService customerService, OrderService orderService) {
+    public MainController(CartService cartService, ProductService productService, CustomerService customerService, OrderService orderService) {
         this.cartService = cartService;
         this.productService  = productService;
         this.customerService = customerService;
@@ -59,19 +52,18 @@ public class WebController {
 
     @RequestMapping(value = "/add_user_data", method = RequestMethod.POST)
     @ResponseBody
-    public String PlaceOrder(@RequestParam String Name, @RequestParam String Surname, @RequestParam String Address) {
+    public String addUserData(@RequestParam String Name, @RequestParam String Surname, @RequestParam String Address) {
         if (!Name.trim().isEmpty() && !Surname.trim().isEmpty() && !Address.trim().isEmpty()){
             customerService.addCustomerData(cart.getCustomerID(),Name, Surname, Address);
             return "User data filled";
         } else{
-            return "Please fill in neccessary data"; //tutaj daj exceptiony
-            //throw new
+            throw new CustomerDataNotFilledException();
         }
     }
 
     @RequestMapping(value = "/confirm_cart_and_create_order", method = RequestMethod.POST)
     @ResponseBody
-    public String PlaceOrder() {
+    public String placeOrder() {
         orderService.placeOrder(cart.getCustomerID());
         cart = new Cart();
         return "Order placed";
