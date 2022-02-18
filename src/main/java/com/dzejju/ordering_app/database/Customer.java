@@ -18,9 +18,10 @@ public class Customer {
 
     public Customer() {}
 
-    public Customer(String firstName, String lastName) {
+    public Customer(String firstName, String lastName, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.address = address;
     }
 
     @Override

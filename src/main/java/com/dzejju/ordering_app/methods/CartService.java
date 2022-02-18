@@ -88,7 +88,7 @@ public class CartService implements  ICartService{
         return true;
     }
 
-    private void updateDiscountCodeForCustomer(Long customerId, String discountCode){
+    public void updateDiscountCodeForCustomer(Long customerId, String discountCode){
         List<Cart> carts = cartRepository.findAllByCustomerID(customerId);
 
         for (Cart cart : carts) {

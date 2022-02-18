@@ -47,8 +47,14 @@ public class MainController {
     @ResponseBody
     public String addUserData(@RequestParam String Name, @RequestParam String Surname, @RequestParam String Address) {
         if (!Name.trim().isEmpty() && !Surname.trim().isEmpty() && !Address.trim().isEmpty()){
-            customerService.addCustomerData(cart.getCustomerID(),Name, Surname, Address);
-            return "User data filled";
+            if (cart.getCustomerID()!=null){
+                customerService.addCustomerData(cart.getCustomerID(),Name, Surname, Address);
+                return "Customer data updated";
+            }else{
+                cart.setCustomerID(customerService.createCustomer(Name, Surname, Address));
+                return "Customer created";
+            }
+
         } else{
             throw new CustomerDataNotFilledException();
         }

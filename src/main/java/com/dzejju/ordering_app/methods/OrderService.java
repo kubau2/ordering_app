@@ -3,6 +3,7 @@ package com.dzejju.ordering_app.methods;
 import com.dzejju.ordering_app.database.*;
 import com.dzejju.ordering_app.exceptions.CustomerDataNotFilledException;
 import com.dzejju.ordering_app.exceptions.CustomerNotFoundException;
+import com.dzejju.ordering_app.exceptions.EmptyCartException;
 import org.hibernate.internal.util.MathHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,10 @@ public class OrderService implements  IOrderService{
 
             List<Cart> itemsInCart = cartRepository.findAllByCustomerID(customerId);
 
+            if (itemsInCart.isEmpty()){
+                throw new EmptyCartException();
+            }
+
             Orders orders = new Orders();
             orders.setCustomerID(customerId);
             orders.setDiscountCode(itemsInCart.get(0).getDiscountCode());
@@ -65,7 +70,7 @@ public class OrderService implements  IOrderService{
             //Calculate discount from code
             if(itemsInCart.get(0).getDiscountCode()!=null){
                 Long discountValue = discountCodesRepository.findByCode(itemsInCart.get(0).getDiscountCode()).getDiscountPercent();
-                cartValue= (cartValue*discountValue)/100;
+                cartValue=cartValue - ((cartValue*discountValue)/100);
             }
 
             cartRepository.deleteAllByCustomerID(customerId);
