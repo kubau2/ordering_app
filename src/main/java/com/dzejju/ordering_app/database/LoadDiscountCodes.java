@@ -17,7 +17,7 @@ public class LoadDiscountCodes implements ApplicationRunner {
 
 
     public void run(ApplicationArguments args) {
-        repository.save(new DiscountCode("ggwp10", Long.parseLong("10")));
+        repository.save(new DiscountCode("ggwp10", Long.parseLong("20")));
         repository.save(new DiscountCode("ggwp50", Long.parseLong("50")));
     }
 }

@@ -12,7 +12,8 @@ public class Orders {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private Long customerID;
-    private Double value; //do zmiany ten long albo rzutowanie przy ladowaniu danych
+    private Double value;
+    private String discountCode;
 
     public Orders() {
     }
@@ -42,5 +43,13 @@ public class Orders {
 
     public void setCustomerID(Long customerID) {
         this.customerID = customerID;
+    }
+
+    public String getDiscountCode() {
+        return discountCode;
+    }
+
+    public void setDiscountCode(String discountCode) {
+        this.discountCode = discountCode;
     }
 }
