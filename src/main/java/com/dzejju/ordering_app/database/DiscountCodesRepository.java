@@ -7,4 +7,6 @@ import java.util.List;
 public interface DiscountCodesRepository extends CrudRepository<DiscountCode, Long> {
 
     DiscountCode findById(long id);
+
+    DiscountCode findByCode(String code);
 }

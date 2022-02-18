@@ -29,9 +29,10 @@ public class MainController {
 
     @RequestMapping(value = "/add_item_to_cart", method = RequestMethod.POST)
     @ResponseBody
-    public String addItemToCart(@RequestParam Long ID, @RequestParam Integer amount) {
+    public String addItemToCart(@RequestParam Long ID, @RequestParam Integer amount, @RequestParam(required = false) String discountCode) {
         if (ID!=null && amount!=null){
             cart.setProductAmount(ID, amount);
+            cart.setDiscountCode(discountCode);
             cart = cartService.addToCart(cart);
 
             //cartService.addCart(cart);
@@ -41,14 +42,6 @@ public class MainController {
             //throw new
         }
     }
-
-
-    @RequestMapping(value = "/show_cart", method = RequestMethod.GET)
-    @ResponseBody
-    public String showCart(@RequestParam Long ID) {
-            return cartService.showCart(ID);
-    }
-
 
     @RequestMapping(value = "/add_user_data", method = RequestMethod.POST)
     @ResponseBody

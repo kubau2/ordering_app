@@ -11,6 +11,7 @@ public class Cart {
     private Long productId;
     private Integer amount;
     private Long customerID;
+    private String discountCode;
 
 //    @ElementCollection
 //    @CollectionTable(name = "Cart_product",
@@ -60,6 +61,15 @@ public class Cart {
     public void setProductAmount(Long product, Integer amount){
         this.productId = product;
         this.amount = amount;
+    }
+
+
+    public String getDiscountCode() {
+        return discountCode;
+    }
+
+    public void setDiscountCode(String discountCode) {
+        this.discountCode = discountCode;
     }
 
 

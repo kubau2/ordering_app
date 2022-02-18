@@ -1,10 +1,13 @@
 package com.dzejju.ordering_app.methods;
 
 import com.dzejju.ordering_app.database.*;
+import com.dzejju.ordering_app.exceptions.DiscountCodeException;
 import com.dzejju.ordering_app.exceptions.NotEnoughProductException;
 import com.dzejju.ordering_app.exceptions.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CartService implements  ICartService{
@@ -18,8 +21,17 @@ public class CartService implements  ICartService{
     @Autowired
     private StockRepository stockRepository;
 
+    @Autowired
+    private DiscountCodesRepository discountCodesRepository;
+
     @Override
     public Cart addToCart(Cart cart) {
+
+        String discountCode = cart.getDiscountCode();
+
+        if(isDiscountCodeValid(discountCode)==false){
+            throw new DiscountCodeException();
+        }
 
         removeFromStock(cart.getProductId(),cart.getAmount());
 
@@ -33,10 +45,14 @@ public class CartService implements  ICartService{
             Integer amount = cartOld.getAmount() + cart.getAmount();
             cart = cartOld;
             cart.setAmount(amount);
+            cart.setDiscountCode(discountCode);
         }
         cartRepository.save(cart);
         cart = new Cart();
         cart.setCustomerID(customerID);
+
+        updateDiscountCodeForCustomer(customerID,discountCode);
+
         return cart;
     }
 
@@ -62,24 +78,24 @@ public class CartService implements  ICartService{
        }
     }
 
+    private boolean isDiscountCodeValid(String discountCode){
+        if (discountCode==null){
+            return true;
+        }
+        if (discountCodesRepository.findByCode(discountCode)==null){
+            return false;
+        }
+        return true;
+    }
 
-    @Override
-    public String showCart(Long ID) {
-        Cart cart = cartRepository.findById(ID).orElse(null);
-        String concat = null;
-//        for (Map.Entry<Product, Integer> set :
-//                cart.getProducts().entrySet()) {
-//
-//            // Printing all elements of a Map
-//            concat= "ID: " + cart.getId().toString() + " Product ID: " + set.getKey().getId() + " Amount: " +set.getValue() + ";";
-//        }
-        return concat;
+    private void updateDiscountCodeForCustomer(Long customerId, String discountCode){
+        List<Cart> carts = cartRepository.findAllByCustomerID(customerId);
+
+        for (Cart cart : carts) {
+            cart.setDiscountCode(discountCode);
+            cartRepository.save(cart);
+        }
     }
 
 
-//    @Override
-//    public int getAvailability(Product product) {
-//        Stock stock = stockRepository.findById(product.getId()).orElse(null);
-//        return stock.getAvailability();
-//    }
 }
