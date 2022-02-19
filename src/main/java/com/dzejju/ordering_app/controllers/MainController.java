@@ -3,6 +3,7 @@ package com.dzejju.ordering_app.controllers;
 
 import com.dzejju.ordering_app.database.*;
 import com.dzejju.ordering_app.exceptions.CustomerDataNotFilledException;
+import com.dzejju.ordering_app.exceptions.ProductNotFoundException;
 import com.dzejju.ordering_app.methods.CartService;
 import com.dzejju.ordering_app.methods.CustomerService;
 import com.dzejju.ordering_app.methods.OrderService;
@@ -38,8 +39,18 @@ public class MainController {
             //cartService.addCart(cart);
             return "Product added to cart";
         } else{
-            return "Please fill in neccessary data"; //tutaj daj exceptiony
-            //throw new
+            throw new ProductNotFoundException(ID);
+        }
+    }
+
+    @RequestMapping(value = "/delete_item_from_cart", method = RequestMethod.POST)
+    @ResponseBody
+    public String removeFromCart(@RequestParam Long ID) {
+        if (ID!=null){
+            cartService.removeFromCart(cart.getCustomerID(),ID);
+            return "Product removed from cart";
+        } else{
+            throw new ProductNotFoundException(ID);
         }
     }
 

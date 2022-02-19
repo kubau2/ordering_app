@@ -58,6 +58,11 @@ public class Cart {
 //        this.id = id;
 //    }
 
+
+    public Long getId() {
+        return id;
+    }
+
     public void setProductAmount(Long product, Integer amount){
         this.productId = product;
         this.amount = amount;

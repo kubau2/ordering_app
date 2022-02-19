@@ -29,7 +29,7 @@ public class CartService implements  ICartService{
 
         String discountCode = cart.getDiscountCode();
 
-        if(isDiscountCodeValid(discountCode)==false){
+        if(!isDiscountCodeValid(discountCode)){
             throw new DiscountCodeException();
         }
 
@@ -54,6 +54,17 @@ public class CartService implements  ICartService{
         updateDiscountCodeForCustomer(customerID,discountCode);
 
         return cart;
+    }
+
+    public void removeFromCart(Long customerID, Long ID) {
+        if (customerID!=null){
+            List<Cart> carts = cartRepository.findAllByCustomerID(customerID);
+            for (Cart crt: carts) {
+                if (crt.getProductId().equals(ID)){
+                    cartRepository.deleteById(crt.getId());
+                }
+            }
+        }
     }
 
     private void createCustomerIfNone(Cart cart){

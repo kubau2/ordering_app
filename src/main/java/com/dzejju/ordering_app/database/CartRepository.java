@@ -13,4 +13,5 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
      List<Cart> findAllByCustomerID(long id);
 
      void deleteAllByCustomerID(long id);
+     void deleteById(long id);
 }
