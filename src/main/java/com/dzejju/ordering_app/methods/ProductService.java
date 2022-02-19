@@ -45,6 +45,16 @@ public class ProductService implements  IProductService{
         return concatenated;
     }
 
+    @Override
+    public String viewByPrice(Double price) {
+        String concatenated = "Products by Price:\n";
+
+        for (Product product: productRepository.findAllByPrice(price)) {
+            concatenated+="Name: " + product.getName() + " price: " + product.getPrice() + "\n";
+        }
+        return concatenated;
+    }
+
 
 //    @Override
 //    public int getAvailability(Product product) {

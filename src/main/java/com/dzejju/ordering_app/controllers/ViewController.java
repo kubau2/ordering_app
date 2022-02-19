@@ -39,4 +39,10 @@ public class ViewController {
     }
 
 
+    @RequestMapping(value = "/filter_by_price", method = RequestMethod.GET)
+    @ResponseBody
+    public String showByPrice(@RequestParam Double price) {
+        return productService.viewByPrice(price);
+    }
+
 }
