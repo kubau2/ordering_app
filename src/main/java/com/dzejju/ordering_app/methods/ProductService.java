@@ -55,10 +55,22 @@ public class ProductService implements  IProductService{
         return concatenated;
     }
 
+    @Override
+    public String viewByTags(String tags) {
+        String concatenated = "Products by Tag:\n";
+        String[] parts = tags.split("#");
 
-//    @Override
-//    public int getAvailability(Product product) {
-//        Stock stock = stockRepository.findById(product.getId()).orElse(null);
-//        return stock.getAvailability();
-//    }
+        for (String tag: parts) {
+            if (tag.equals("")){
+                continue;
+            }
+            for (Product product: productRepository.findAll()) {
+                if (product.getTags().contains(tag)){
+                    concatenated+="Name: " + product.getName() + " price: " + product.getPrice() + "\n";
+                }
+            }
+        }
+        return concatenated;
+    }
+
 }

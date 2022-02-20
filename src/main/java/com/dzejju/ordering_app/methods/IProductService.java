@@ -12,6 +12,7 @@ public interface IProductService {
     public abstract String viewProducts();
     public abstract String viewProductsDetails();
     public abstract String viewByPrice(Double price);
+    public abstract String viewByTags(String tags);
 
     //   public abstract void updateProduct(String id, Product product);
  //   public abstract void deleteProduct(String id);

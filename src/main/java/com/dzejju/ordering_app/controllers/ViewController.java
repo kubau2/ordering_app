@@ -45,4 +45,10 @@ public class ViewController {
         return productService.viewByPrice(price);
     }
 
+    @RequestMapping(value = "/filter_by_tags", method = RequestMethod.GET)
+    @ResponseBody
+    public String showByTags(@RequestParam String tags) {
+        return productService.viewByTags(tags);
+    }
+
 }

@@ -21,13 +21,13 @@ public class LoadProducts implements ApplicationRunner {
     }
 
     public void run(ApplicationArguments args) {
-        Product product = new Product("Jabluszko", Double.valueOf(2.5));
+        Product product = new Product("Jabluszko", Double.valueOf(2.5), "#pyszne#japko#slodziutkie");
         productRepository.save(product);
         Stock stock = new Stock(product.getId(), 10);
         stockRepository.save(stock);
         ProductDetails productDetails = new ProductDetails(5l, "For everyone");
         productDetailsRepository.save(productDetails);
-        product = new Product("Piernik", Double.valueOf(5));
+        product = new Product("Piernik", Double.valueOf(5), "#twardy#dobry");
         productRepository.save(product);
         stock = new Stock(product.getId(), 20);
         stockRepository.save(stock);
@@ -35,7 +35,7 @@ public class LoadProducts implements ApplicationRunner {
         productDetails = new ProductDetails(3l, "For adults");
         productDetailsRepository.save(productDetails);
 
-        product = new Product("Ciastko", Double.valueOf(2.5));
+        product = new Product("Ciastko", Double.valueOf(2.5), "#smaczniutkie#pyszne");
         productRepository.save(product);
         stock = new Stock(product.getId(), 10);
         stockRepository.save(stock);

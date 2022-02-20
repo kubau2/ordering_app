@@ -10,16 +10,17 @@ public class Product {
     private Long id;
     private String name;
     private Double price;
+    private String tags;
 
 
     protected Product() {
     }
 
-    public Product(String name, Double price) {
+    public Product(String name, Double price, String tags) {
         this.name = name;
         this.price = price;
+        this.tags = tags;
     }
-
 
     public Long getId() {
         return id;
@@ -33,4 +34,7 @@ public class Product {
         return price;
     }
 
+    public String getTags() {
+        return tags;
+    }
 }
