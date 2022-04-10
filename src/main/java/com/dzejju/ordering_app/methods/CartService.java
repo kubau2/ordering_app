@@ -61,7 +61,10 @@ public class CartService implements  ICartService{
             List<Cart> carts = cartRepository.findAllByCustomerID(customerID);
             for (Cart crt: carts) {
                 if (crt.getProductId().equals(ID)){
+                    int amount = crt.getAmount();
+                    Long productID = crt.getProductId();
                     cartRepository.deleteById(crt.getId());
+                    addToStock(productID, amount);
                 }
             }
         }
@@ -87,6 +90,17 @@ public class CartService implements  ICartService{
        else{
            throw new ProductNotFoundException(productId);
        }
+    }
+
+    private void addToStock(Long productId, Integer amount){
+        Stock stock = stockRepository.findById(productId).orElse(null);
+        if (stock!=null){
+                stock.setAvailability(stock.getAvailability()+amount);
+                stockRepository.save(stock);
+        }
+        else{
+            throw new ProductNotFoundException(productId);
+        }
     }
 
     private boolean isDiscountCodeValid(String discountCode){
